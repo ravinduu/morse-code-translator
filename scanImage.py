@@ -16,9 +16,10 @@ def rectify(h):
     return hnew
 
 def birdEye(image):
-    image = cv2.resize(image, (800, 1500))
+    image = cv2.resize(image, (420,590))
     
     orig = image.copy()
+    
 
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     blurred = cv2.GaussianBlur(gray, (5, 5), 0)

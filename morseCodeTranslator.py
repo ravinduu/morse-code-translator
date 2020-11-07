@@ -9,10 +9,10 @@ morseCodeData = {'01':'A','1000':'B','1010':'C','100':'D','0':'E','0010':'F','11
 
 def readImage():
 
-    image = cv2.imread('images/10.jpg',)
+    image = cv2.imread('images/test4.jpg',)
 
     image = birdEye(image)
-    image = cv2.resize(image,(650,700),interpolation=cv2.INTER_CUBIC)
+    # image = cv2.resize(image,(420,590),interpolation=cv2.INTER_CUBIC)
     cv2.imshow('Image',image)	
 
     grayImage = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
@@ -34,8 +34,8 @@ def readImage():
 
     contour = cv2.findContours(erodeImage.copy(),cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)[1]
     copyImage = np.zeros((image.shape[0],image.shape[1],3),dtype='uint8')
-    # cv2.drawContours(copyImage,contour,-1,(0,0,255),1)
-    # cv2.imshow('Con Image',copyImage)	
+    cv2.drawContours(copyImage,contour,-1,(0,0,255),1)
+    cv2.imshow('Con Image',copyImage)	
 
     for cnt in contour:
         accuracy = 0.0001*cv2.arcLength(cnt,True)
@@ -50,13 +50,9 @@ def readImage():
 
     # cv2.imshow('Copy Image', copyImage)	
 	
-    changeSizeflag = 1
+
     copyImage = copyImage[:,:,1]
-    if changeSizeflag == 0:
-        image = cv2.resize(copyImage,(400,300),interpolation=cv2.INTER_CUBIC)
-    else:	
-        image = cv2.resize(copyImage,(300,200),interpolation=cv2.INTER_CUBIC)
-    finalImage = image.copy()
+    image = cv2.resize(copyImage,(420,590),interpolation=cv2.INTER_CUBIC)
 
     kernel = np.ones((3,3),np.uint8)
     erodeImage = cv2.dilate(morphImage,kernel,iterations = 1)
@@ -115,13 +111,12 @@ def decodeMorse(image):
             finalData.append(data)
 
         i+=10
-    # print(finalData)
+    print(finalData)
 
     for code in finalData:
         if len(code) < 5:
             output += morseCodeData[code]
 
-    
     print('Translated Message : %s'% output)
 
 
